@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CharacterState",
+  "description": "角色状态追踪模型。记录每个角色在每章结束时的完整状态。",
+  "type": "object",
+  "required": ["character_id", "name", "current_state", "state_history"],
+  "properties": {
+    "character_id": {
+      "type": "string",
+      "description": "角色唯一ID，如 LINYUN"
+    },
+    "name": {
+      "type": "string",
+      "description": "角色名"
+    },
+    "role_type": {
+      "type": "string",
+      "enum": ["protagonist", "major", "supporting", "minor", "antagonist"],
+      "description": "角色类型"
+    },
+    "current_state": {
+      "type": "object",
+      "required": ["cultivation", "injuries", "location", "emotional_state", "relationships"],
+      "properties": {
+        "cultivation": {
+          "type": "object",
+          "properties": {
+            "realm": { "type": "string", "description": "当前境界" },
+            "sub_stage": { "type": "string", "description": "子阶段" },
+            "progress_note": { "type": "string", "description": "突破进度/积蓄描述" }
+          }
+        },
+        "injuries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string" },
+              "severity": { "type": "string", "enum": ["轻伤", "中伤", "重伤", "致命"] },
+              "sustained_in_chapter": { "type": "integer" },
+              "healing_progress": { "type": "string" }
+            }
+          }
+        },
+        "location": {
+          "type": "string",
+          "description": "当前所在位置"
+        },
+        "emotional_state": {
+          "type": "string",
+          "description": "当前情绪状态"
+        },
+        "knowledge": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "关键信息知晓列表"
+        },
+        "resources": {
+          "type": "object",
+          "description": "资源/物品/灵石等"
+        },
+        "techniques": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "已掌握的功法/技能"
+        },
+        "relationships": {
+          "type": "object",
+          "description": "与其他角色的关系状态。key=角色名, value=关系描述",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string", "enum": ["stranger", "acquaintance", "friend", "close_friend", "ally", "mentor_student", "romantic", "rival", "enemy", "family"] },
+              "intensity": { "type": "integer", "minimum": 1, "maximum": 10 },
+              "stage": { "type": "string", "description": "当前关系阶段描述" },
+              "last_changed_in": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "state_history": {
+      "type": "object",
+      "description": "按章号索引的历史状态。key=chapter_NNN 格式。",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "cultivation": { "type": "object" },
+          "injuries": { "type": "array" },
+          "location": { "type": "string" },
+          "emotional_state": { "type": "string" },
+          "relationships_summary": { "type": "string" },
+          "key_events": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "arc_progress": {
+      "type": "object",
+      "description": "角色弧光推进记录",
+      "properties": {
+        "current_arc_stage": { "type": "string" },
+        "growth_milestones": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "chapter": { "type": "integer" },
+              "milestone": { "type": "string" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

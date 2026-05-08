@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "StateDelta",
+  "description": "Writer 产出的结构化状态变更。由 Settle 脚本消费，更新所有状态文件。",
+  "type": "object",
+  "required": ["chapter", "timestamp", "factOps", "hookOps", "characterStateChanges", "relationshipChanges", "chapterSummary", "writerNotes"],
+  "properties": {
+    "chapter": {
+      "type": "integer"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "factOps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action", "subject", "predicate", "object", "importance", "evidence"],
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["add", "modify", "retire"],
+            "description": "add=新增事实 / modify=修改已有 / retire=推翻旧事实"
+          },
+          "subject": {
+            "type": "string",
+            "description": "实体名（角色/地点/物品/概念）"
+          },
+          "predicate": {
+            "type": "string",
+            "description": "发生了什么变化"
+          },
+          "object": {
+            "type": "string",
+            "description": "新值或新事实"
+          },
+          "importance": {
+            "type": "string",
+            "enum": ["permanent", "arc_scoped", "chapter_scoped"]
+          },
+          "validFrom": {
+            "type": "integer",
+            "description": "事实从哪一章开始生效"
+          },
+          "validUntil": {
+            "type": ["integer", "string", "null"],
+            "description": "null=永不过期 / 整数=到期章号 / end_of_arc=弧结束时"
+          },
+          "evidence": {
+            "type": "string",
+            "description": "正文中支撑此事实的具体句子"
+          }
+        }
+      }
+    },
+    "hookOps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action", "hookId", "description", "newStatus"],
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": ["plant", "advance", "resolve", "defer"]
+          },
+          "hookId": {
+            "type": "string",
+            "description": "伏笔ID"
+          },
+          "description": {
+            "type": "string",
+            "description": "本章对此伏笔做了什么——引用正文具体内容"
+          },
+          "newStatus": {
+            "type": "string",
+            "enum": ["planted", "hint", "progressing", "partial_resolve", "resolved", "deferred"]
+          },
+          "advancedCount": {
+            "type": "integer",
+            "description": "推进次数。≥2 触发 promoted=true"
+          },
+          "shouldPromote": {
+            "type": "boolean",
+            "description": "advancedCount ≥ 2 时建议升格"
+          }
+        }
+      }
+    },
+    "characterStateChanges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["character", "field", "oldValue", "newValue", "cause", "evidence"],
+        "properties": {
+          "character": { "type": "string" },
+          "field": {
+            "type": "string",
+            "enum": ["cultivation", "injury", "location", "knowledge", "emotion", "identity", "relationship", "resource", "technique", "reputation"]
+          },
+          "oldValue": { "type": "string" },
+          "newValue": { "type": "string" },
+          "cause": { "type": "string" },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "relationshipChanges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relationshipId", "characters", "fromStage", "toStage", "triggerEvent", "evidence"],
+        "properties": {
+          "relationshipId": { "type": "string" },
+          "characters": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "fromStage": { "type": "string" },
+          "toStage": { "type": "string" },
+          "triggerEvent": { "type": "string" },
+          "evidence": { "type": "string" }
+        }
+      }
+    },
+    "chapterSummary": {
+      "type": "object",
+      "required": ["characters", "events", "stateChanges", "hookActivity", "mood", "chapterType"],
+      "properties": {
+        "characters": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "events": {
+          "type": "string",
+          "description": "200字散文摘要——因果关系简述"
+        },
+        "stateChanges": {
+          "type": "string",
+          "description": "人物状态变更摘要"
+        },
+        "hookActivity": {
+          "type": "string",
+          "description": "伏笔活动摘要"
+        },
+        "mood": { "type": "string" },
+        "chapterType": { "type": "string" }
+      }
+    },
+    "writerNotes": {
+      "type": "object",
+      "required": ["completeness", "deviations"],
+      "properties": {
+        "completeness": { "type": "string" },
+        "deviations": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "continuityConcerns": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "engagementSelfCheck": {
+          "type": "object",
+          "properties": {
+            "hookStrength": { "type": "integer", "minimum": 0, "maximum": 5 },
+            "tensionLevel": { "type": "integer", "minimum": 0, "maximum": 5 },
+            "readerPayoffDelivery": { "type": "string" },
+            "note": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "_schema": "hooks v2",
+  "_description": "伏笔台账。活跃上限12条，每章新埋上限2条。resolve N → open ≥ N。",
+  "active_hooks": [],
+  "resolved_hooks": [],
+  "abandoned_hooks": [],
+  "budget": {
+    "active": 0,
+    "max": 12,
+    "can_plant": 2
+  }
+}

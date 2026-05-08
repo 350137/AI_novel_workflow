@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:clawhub.ai)",
+      "WebFetch(domain:skillhub.cloud.tencent.com)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:skillhub.tencent.com)",
+      "WebFetch(domain:skillhub.cn)",
+      "Bash(npx clawhub *)",
+      "Bash(npm list *)",
+      "Bash(clawhub search *)",
+      "Bash(clawhub inspect *)",
+      "Bash(clawhub *)",
+      "Bash(npx skillhub *)",
+      "Bash(pip list *)",
+      "Bash(skillhub *)",
+      "Bash(curl -fsSL https://skillhub.cn/install/install.sh)",
+      "Bash(bash)",
+      "Bash(bash -s -- --no-skills)",
+      "Bash(curl -s \"https://skillhub.cloud.tencent.com/api/skills/g113593\")",
+      "Bash(curl -s \"https://skillhub.cn/api/skills/g113593\")",
+      "Bash(unzip -l \"D:/下载/g113593-1.0.5.zip\")",
+      "Bash(unzip -p \"D:/下载/g113593-1.0.5.zip\" SKILL.md)",
+      "Bash(mkdir -p __TRACKED_VAR__/.claude/skills/tomato-novelist)",
+      "Bash(unzip -o D:/下载/g113593-1.0.5.zip -d __TRACKED_VAR__/.claude/skills/tomato-novelist/)",
+      "Bash(xargs grep *)"
+    ]
+  }
+}

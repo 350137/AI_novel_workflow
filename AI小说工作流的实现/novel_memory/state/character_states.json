@@ -1,0 +1,38 @@
+{
+  "_schema": "character_states v1",
+  "_description": "每个角色的全章状态追踪。每章落定后更新 current_state 并追加 state_history。",
+  "_example": {
+    "character_id": "LINYUN",
+    "name": "林云",
+    "role_type": "protagonist",
+    "current_state": {
+      "cultivation": { "realm": "开元境", "sub_stage": "中境", "progress_note": "6条副脉修复完成，主脉尚在封印中" },
+      "injuries": [],
+      "location": "杂役院",
+      "emotional_state": "压抑但坚定",
+      "knowledge": ["金手指初步激活", "某地点残留纹路与封印同源"],
+      "resources": { "灵石": 15, "丹药": "回气丹×3" },
+      "techniques": ["基础吐纳术", "混沌珠第一层"],
+      "relationships": {
+        "沈清雪": { "type": "acquaintance", "intensity": 3, "stage": "初识——她注意到了主角的异常", "last_changed_in": 5 }
+      }
+    },
+    "state_history": {
+      "chapter_001": {
+        "cultivation": { "realm": "开元境", "sub_stage": "初境" },
+        "injuries": ["旧伤——三年前封印反噬"],
+        "location": "杂役院",
+        "emotional_state": "麻木",
+        "relationships_summary": "无亲近之人",
+        "key_events": ["金手指意外激活"]
+      }
+    },
+    "arc_progress": {
+      "current_arc_stage": "恢复期",
+      "growth_milestones": [
+        { "chapter": 1, "milestone": "金手指激活", "description": "混沌珠在濒死时意外触发" }
+      ]
+    }
+  },
+  "characters": {}
+}

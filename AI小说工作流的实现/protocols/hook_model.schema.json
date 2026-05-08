@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HookModel",
+  "description": "Hook v2 数据模型。完整12列状态机，支持 promoted 自动升格和 urgency 半衰期计算。",
+  "type": "object",
+  "required": ["id", "description", "type", "status", "core_hook", "planted_chapter", "expected_payoff", "promoted", "advanced_count"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^H\\d{3}$",
+      "description": "伏笔ID，格式 H001-H999"
+    },
+    "description": {
+      "type": "string",
+      "description": "伏笔内容描述"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["world_truth", "character_secret", "relationship_reveal", "power_chekhov", "threat_foreshadow", "mystery_clue", "emotional_debt", "plot_twist"],
+      "description": "伏笔类型"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["seed", "planted", "hint", "progressing", "partial_resolve", "resolved", "deferred", "abandoned"],
+      "description": "伏笔当前状态"
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["high", "medium", "low"],
+      "default": "medium"
+    },
+    "core_hook": {
+      "type": "boolean",
+      "description": "是否为核心伏笔。仅当 core_hook=true AND promoted=true 时可触发 CRITICAL 告警。"
+    },
+    "depends_on": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "依赖的其他伏笔ID列表"
+    },
+    "planted_chapter": {
+      "type": "integer",
+      "description": "埋设章节"
+    },
+    "expected_payoff_chapter": {
+      "type": "integer",
+      "description": "预期回收章节"
+    },
+    "payoff_timing": {
+      "type": "string",
+      "enum": ["imminent_1_5", "near_6_15", "mid_16_30", "far_31_60", "distant_60plus"],
+      "description": "回收时机分类"
+    },
+    "half_life_chapters": {
+      "type": "integer",
+      "description": "半衰期（章数）。超过此章数未推进则 urgency 开始衰减。"
+    },
+    "advanced_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "推进次数。≥2 时自动触发 promoted=true。"
+    },
+    "promoted": {
+      "type": "boolean",
+      "description": "是否已升格。advanced_count ≥ 2 自动设为 true。promoted=true + core_hook=true + 逾期 → CRITICAL。"
+    },
+    "last_advanced_chapter": {
+      "type": "integer",
+      "description": "最近一次推进的章节号"
+    },
+    "urgency": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "紧迫度 0-5。基于半衰期公式：5 × (0.5 ^ (chaptersSinceLastAdvance / halfLifeChapters))"
+    },
+    "resolution": {
+      "type": "string",
+      "description": "回收时填写：如何回收的"
+    },
+    "notes": {
+      "type": "string",
+      "description": "备注"
+    }
+  }
+}

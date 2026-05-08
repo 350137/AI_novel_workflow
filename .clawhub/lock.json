@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "skills": {
+    "academic-writing": {
+      "version": "1.0.0",
+      "installedAt": 1777724760510
+    },
+    "academic-deep-research": {
+      "version": "1.0.0",
+      "installedAt": 1777724762113
+    },
+    "literature-review": {
+      "version": "1.2.0",
+      "installedAt": 1777724770076
+    },
+    "paper-summarize-academic": {
+      "version": "1.0.1",
+      "installedAt": 1777724779912
+    },
+    "latex-studio": {
+      "version": "1.0.5",
+      "installedAt": 1777724822335
+    },
+    "python-dataviz": {
+      "version": "1.0.0",
+      "installedAt": 1777724832731
+    },
+    "data-analysis": {
+      "version": "1.0.2",
+      "installedAt": 1777724883019
+    },
+    "geology": {
+      "version": "1.0.0",
+      "installedAt": 1777724883970
+    },
+    "paper-fetcher": {
+      "version": "1.0.0",
+      "installedAt": 1777724909379
+    },
+    "academic-citation-manager": {
+      "version": "1.0.0",
+      "installedAt": 1777724943457
+    },
+    "academic-literature-search": {
+      "version": "0.1.3",
+      "installedAt": 1777724950020
+    },
+    "novel-writer-cn": {
+      "version": "1.0.0",
+      "installedAt": 1777725185466
+    },
+    "openclaw-novel-write": {
+      "version": "0.1.2",
+      "installedAt": 1777725191601
+    },
+    "novelist": {
+      "version": "1.0.0",
+      "installedAt": 1777725201879
+    },
+    "story-cog": {
+      "version": "1.0.10",
+      "installedAt": 1777725259964
+    },
+    "story-writer": {
+      "version": "2.0.2",
+      "installedAt": 1777725273298
+    },
+    "onkos": {
+      "version": "1.6.3",
+      "installedAt": 1777725637161
+    },
+    "fiction-crafter": {
+      "version": "1.1.0",
+      "installedAt": 1777725992334
+    },
+    "my-novel-writer": {
+      "version": "1.0.0",
+      "installedAt": 1777726686997
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "novel_title": "",
+  "total_chapters_planned": 0,
+  "current_chapter": 0,
+  "current_step": "idle",
+  "chapter_history": {},
+  "active_chapter": {
+    "number": 0,
+    "step": "idle",
+    "current_version": 1,
+    "revision_round": 0,
+    "audit_history": [],
+    "source_file": null
+  },
+  "volume_progress": {
+    "current_volume": 1,
+    "chapters_in_volume": 0,
+    "chapters_completed": 0,
+    "volumes": {}
+  },
+  "last_updated": null
+}

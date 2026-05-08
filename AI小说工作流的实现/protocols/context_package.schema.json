@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContextPackage",
+  "description": "Planner 为 Writer 组装的受控上下文切片。Writer 只读此文件，不直接加载真相文件。",
+  "type": "object",
+  "required": ["chapter", "assembledBy", "selectedContexts", "hardConstraints", "chapterTrail", "emotionalContext"],
+  "properties": {
+    "chapter": {
+      "type": "integer",
+      "description": "本章编号"
+    },
+    "assembledBy": {
+      "type": "string",
+      "const": "hjw-novel-planner"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "chapterGoal": {
+      "type": "string",
+      "description": "从 ChapterMemo 提取的本章核心目标"
+    },
+    "chapterType": {
+      "type": "string",
+      "enum": ["爆发章", "蓄压章", "后效章", "过渡章"]
+    },
+    "selectedContexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "fields", "importance", "reason"],
+        "properties": {
+          "source": {
+            "type": "string",
+            "description": "来源文件路径"
+          },
+          "fields": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "包含的字段/段落"
+          },
+          "importance": {
+            "type": "string",
+            "enum": ["permanent", "arc_scoped", "chapter_scoped"],
+            "description": "事实重要性分级"
+          },
+          "reason": {
+            "type": "string",
+            "description": "为什么需要这段上下文"
+          }
+        }
+      }
+    },
+    "excludedContexts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "reason"],
+        "properties": {
+          "source": { "type": "string" },
+          "fields": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "reason": { "type": "string" }
+        }
+      },
+      "description": "被排除的上下文及原因——Writer 可放心不知道"
+    },
+    "hardConstraints": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "不可违反的写作约束（来自 Genre Profile + 本章特有约束）"
+    },
+    "hookDebtBriefing": {
+      "type": "object",
+      "properties": {
+        "urgentHooks": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "逾期或即将逾期的伏笔"
+        },
+        "upcomingPayoffs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "即将在本章附近回收的伏笔"
+        },
+        "budgetStatus": {
+          "type": "object",
+          "properties": {
+            "active": { "type": "integer" },
+            "max": { "type": "integer" },
+            "canPlant": { "type": "integer" }
+          }
+        },
+        "promotedCoreHooksStale": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "chapterTrail": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["chapter", "summary", "endHook", "hookType"],
+        "properties": {
+          "chapter": { "type": "integer" },
+          "summary": { "type": "string" },
+          "endHook": { "type": "string" },
+          "hookType": { "type": "string" }
+        }
+      },
+      "description": "最近3章的轨迹——章末钩子+摘要，供 Writer 承接 + 防重复"
+    },
+    "emotionalContext": {
+      "type": "object",
+      "required": ["previousMood", "targetMood"],
+      "properties": {
+        "previousMood": { "type": "string" },
+        "targetMood": { "type": "string" },
+        "emotionalCurvePosition": { "type": "string" }
+      }
+    },
+    "characterBriefs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "currentState": {
+            "type": "object",
+            "properties": {
+              "cultivation": { "type": "string" },
+              "injuries": { "type": "array" },
+              "location": { "type": "string" },
+              "emotionalState": { "type": "string" }
+            }
+          },
+          "languageFingerprint": { "type": "string" },
+          "recentChanges": { "type": "string" }
+        }
+      },
+      "description": "本章出场角色的当前状态摘要"
+    }
+  }
+}
