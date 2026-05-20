@@ -1,5 +1,0 @@
-{
-  "_schema": "volumes v1",
-  "_description": "卷规划追踪。simple_plan 在初次大纲时生成（≤300字），detailed_plan 在开卷时结合前文生成。",
-  "volumes": {}
-}

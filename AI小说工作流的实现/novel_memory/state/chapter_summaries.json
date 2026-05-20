@@ -1,5 +1,0 @@
-{
-  "_schema": "chapter_summaries v1",
-  "_description": "每章250字摘要。供 ContextPackage 组装和卷级压缩消费。",
-  "summaries": {}
-}
