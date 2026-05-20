@@ -33,7 +33,8 @@
       "Bash(curl -s \"https://api.github.com/repos/Narcooo/inkos/contents/dist/genres\")",
       "Bash(curl -sL \"https://raw.githubusercontent.com/Narcooo/inkos/main/dist/genres/\")",
       "Bash(grep -c \"D:\\\\\\\\小说\\\\\\\\AI小说工作流的实现\" /d/小说/AI小说工作流的实现/.claude/skills/write-chapter/SKILL.md)",
-      "Bash([ -f \"/c/Users/35013/.claude/skills/$s/SKILL.md\" ])"
+      "Bash([ -f \"/c/Users/35013/.claude/skills/$s/SKILL.md\" ])",
+      "WebFetch(domain:www.calendardate.com)"
     ]
   }
 }

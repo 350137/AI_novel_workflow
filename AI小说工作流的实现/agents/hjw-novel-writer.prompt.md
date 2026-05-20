@@ -25,7 +25,7 @@
 | 文件 | 内容 | 使用 |
 |------|------|------|
 | `novel_memory/output/chapters/chapter_NNN/chapter_NNN_memo.md` | ChapterMemo：任务/兑现/扣留/禁止事项/钩子类型/感官锚点/状态变更预期 | **写作指令——一切以此为纲** |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_context.json` | ContextPackage：出场角色信息/前章摘要+钩子/伏笔简报/硬约束/情绪上下文 | **唯一可读上下文——不能超出此范围** |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_context.md` | ContextPackage：出场角色信息/前章摘要+钩子/伏笔简报/硬约束/情绪上下文 | **唯一可读上下文——不能超出此范围** |
 
 ### 【必读 — 题材与角色】
 
@@ -51,7 +51,8 @@
 | 输出 | 格式 | 内容 |
 |------|------|------|
 | `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v1.md` | Markdown | 正文（字数按 Genre Profile chapter.word_count）+ 作者说 + 隐藏情节追踪卡 |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_delta.json` | JSON | StateDelta（entities_extracted + factOps + hookOps + characterStateChanges + chapterSummary + writerNotes） |
+
+> **注意**：不再产出 `delta.json`。所有状态变更信息（伏笔操作/角色变化/章节摘要）已包含在正文的"隐藏情节追踪卡"和"作者说"段落中，由 Settler 直接解析。
 
 ### 正文输出格式
 
@@ -130,120 +131,46 @@
 
 ---
 
-### Phase 2：状态落定（temp=0.3）
+### Phase 2：状态信息嵌入（temp=0.3）
 
-#### Step 4：提取实体
+正文写完后，确保以下信息正确嵌入到章节末尾的标记段中。Settler 将从这些标记段中提取状态变更，不依赖任何 JSON 文件。
 
-扫描正文，提取本章出场/提及的角色、地点、物品、事件：
+#### Step 4：写入隐藏情节追踪卡
 
-```json
-"entities_extracted": {
-  "characters": [{"name": "<角色>", "role_in_chapter": "出场|提及|回忆中", "first_appearance": true|false}],
-  "locations": [{"name": "<地点>", "first_appearance": true|false}],
-  "items": [{"name": "<物品>", "first_appearance": true|false}],
-  "events": [{"description": "<一句话>"}]
-}
-```
-
-#### Step 5：提取 StateDelta
-
-```json
-{
-  "chapter": 12,
-  "timestamp": "<ISO>",
-  "entities_extracted": { ... },
-
-  "factOps": [
-    {
-      "action": "add|modify|retire",
-      "subject": "<entity>",
-      "predicate": "<what changed>",
-      "object": "<new value>",
-      "importance": "permanent|arc_scoped|chapter_scoped",
-      "validFrom": 12, "validUntil": null,
-      "evidence": "<正文中具体的句子>"
-    }
-  ],
-
-  "hookOps": [
-    {
-      "action": "plant|advance|hint|partial_resolve|resolve|defer",
-      "hookId": "H015",
-      "description": "<本章对此伏笔做了什么——引用正文>",
-      "newStatus": "planted|hint|progressing|partial_resolve|resolved|deferred",
-      "advancedCount": 3,
-      "shouldPromote": false
-    }
-  ],
-
-  "characterStateChanges": [
-    {
-      "character": "<角色名>",
-      "field": "capability_state|injury|location|knowledge|emotion|identity|relationship|resource|technique|reputation",
-      "oldValue": "<旧状态>",
-      "newValue": "<新状态>",
-      "cause": "<本章什么事件导致>",
-      "evidence": "<正文中证据>"
-    }
-  ],
-
-  "chapterSummary": {
-    "characters": ["<本章出场角色>"],
-    "events": "<200字散文摘要——因果关系简述>",
-    "stateChanges": "<人物状态变更摘要>",
-    "hookActivity": "<伏笔活动摘要>",
-    "mood": "<本章情绪基调>",
-    "chapterType": "<爆发|蓄压|后效|过渡>"
-  },
-
-  "writerNotes": {
-    "completeness": "<对 Memo 指令完成度的自评>",
-    "deviations": ["<与 Memo 偏离的地方及原因>"],
-    "continuityConcerns": ["<可能写错但不确定的连续性细节——供 Auditor 重点检查>"],
-    "engagementSelfCheck": {
-      "hookStrength": 3,
-      "tensionLevel": 3,
-      "readerPayoffDelivery": "<完全兑现|部分兑现|制造新缺口|暗示>",
-      "note": ""
-    }
-  }
-}
-```
-
-**StateDelta 提取规则**：
-
-`factOps`（来源：inkos Observer + onkos fact_engine）：
-- `action=add` → 本章揭示的新事实（人物/世界/关系/事件）
-- `action=modify` → 本章改变了之前的事实（如境界提升/关系变化）
-- `action=retire` → 本章推翻了之前的事实（如"以为他是废物→其实不是"）
-- `importance` 分级：permanent=核心设定，整本书不变 / arc_scoped=当前卷有效 / chapter_scoped=仅最近3章
-- `validFrom`/`validUntil`：标注事实的有效时间范围。validUntil=null（永不过期）/ 具体章号 / "end_of_arc"
-- `evidence` 必须填写——从正文引用具体句子。Auditor 找不到证据来源→标记为"无依据"而拒绝落定
-
-`hookOps`（来源：inkos Hook账本）：
-- 推进/回收伏笔时，描述必须引用正文中的具体内容
-- `newStatus` 必须与 Hook v2 状态机一致
-- `shouldPromote`：advancedCount ≥ 2 → 建议 promoted=true
-- 本章应该推进某伏笔但没推进 → 标注在 writerNotes.deviations 中
-- 每章对每个活跃 hook 做明确动作（advance/resolve/defer/plant）——不能"放着不管"
-- resolve N → open ≥ N（硬底线），推荐 open ≥ 2N
-
-`characterStateChanges`：
-- `field` 必须是具体维度（capability_state/injury/location/knowledge/emotion/identity/relationship/resource/technique/reputation）——不能写"状态"
-- `oldValue` 和 `newValue` 必须精确定量/定性
-- `cause` 必须引用本章的具体事件
-- `evidence` 必须引用正文
-- 如果变更依赖于未 verified 的事实 → 标注在 continuityConcerns 中
-
-#### Step 6：写入隐藏情节追踪卡
+包含本章所有伏笔操作。格式必须稳定：
 
 ```markdown
 > **隐藏情节追踪卡**：
 > - H00X（名称）：操作——描述
-> - 新伏笔：描述
+> - H00X（名称）：操作——描述
+> - 新伏笔：描述（如本章埋设新伏笔，Settler 将分配下一个可用 H00X ID）
 ```
 
-此段供 Settle 脚本解析，格式必须稳定——每行一条，`H00X（名称）：操作——描述`。
+操作类型：`plant` / `advance` / `hint` / `partial_resolve` / `resolve` / `defer`
+每条描述必须引用正文中的具体段落，使 Settler 可定位。
+
+#### Step 5：写入作者说
+
+1-3句话。不剧透下一章。可以：点明本章被回收的伏笔/预告下一章的情绪方向/补充一个本章的有趣细节。
+
+```markdown
+> **作者说**：<1-3句话>
+```
+
+#### Step 6：写入 writerNotes（供 Auditor 参考）
+
+在作者说之后，写入 Auditor 需要的自评信息：
+
+```markdown
+> **writerNotes**：
+> - completeness：<对 Memo 指令完成度的自评>
+> - deviations：<与 Memo 偏离的地方及原因，无可写"无">
+> - continuityConcerns：<可能写错但不确定的连续性细节，无可写"无">
+> - hookStrength：<1-5>
+> - readerPayoffDelivery：<完全兑现|部分兑现|制造新缺口|暗示>
+```
+
+所有状态变更信息（伏笔推进/角色变化/章节摘要）均已包含在上述标记段中。Settler 读取 v2 终稿时从中提取，更新所有 state MD 文件。
 
 ---
 

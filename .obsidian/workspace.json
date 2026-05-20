@@ -1,0 +1,219 @@
+{
+  "main": {
+    "id": "10770fff69b38c58",
+    "type": "split",
+    "children": [
+      {
+        "id": "4a36fc3a5530334f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "192bacf5e35b2525",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "AI小说工作流的实现/docs/workflow-orchestrator.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "workflow-orchestrator"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "0817c59eaff7678c",
+    "type": "split",
+    "children": [
+      {
+        "id": "c5c1c2c19f16df7c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "776d4808998cfc46",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "6ada0e1b37529b7b",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "e7bb7ede701b3aa8",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 217.5
+  },
+  "right": {
+    "id": "0387f934917fd7ba",
+    "type": "split",
+    "children": [
+      {
+        "id": "17a0696887cea583",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "094a5004f3fac285",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "玄幻/test1/output/chapters/chapter_001/chapter_001_v2.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "chapter_001_v2 的反向链接列表"
+            }
+          },
+          {
+            "id": "46be72f0bc5fcec2",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "玄幻/test1/output/chapters/chapter_001/chapter_001_v2.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "chapter_001_v2 的出链列表"
+            }
+          },
+          {
+            "id": "922c27602d03f13a",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "1c84a46266106b3b",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "9a3bd4f60abc593c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "玄幻/test1/output/chapters/chapter_001/chapter_001_v2.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "chapter_001_v2 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "776d4808998cfc46",
+  "lastOpenFiles": [
+    "AI小说工作流的实现/agents/hjw-novel-writer.prompt.md",
+    "AI小说工作流的实现/agents/hjw-novel-settler.prompt.md",
+    "AI小说工作流的实现/agents/hjw-novel-reviser.prompt.md",
+    "AI小说工作流的实现/agents/hjw-novel-polisher.prompt.md",
+    "AI小说工作流的实现/agents/hjw-novel-planner.prompt.md",
+    "AI小说工作流的实现/agents/hjw-novel-auditor.prompt.md",
+    "AI小说工作流的实现/agents/hjw-novel-advisor.prompt.md",
+    "未命名.base",
+    "AI小说工作流的实现/docs/输入输出统计.md",
+    "重生反派/系统设定横向对比.md",
+    "重生反派/设定讨论文档.md",
+    "番茄小说题材分析报告.md",
+    "玄幻/test1/output/chapters/chapter_001/chapter_001_v2.md",
+    "玄幻/test1/output/chapters/chapter_001/chapter_001_v4.md",
+    "番茄小说题材分析报告.md.tmp.15932.1778316238743",
+    "玄幻/test1/output/chapters/chapter_001/chapter_001_v3.md",
+    "玄幻/test1/novel_memory/story/roles/周师兄.md",
+    "玄幻/test1/novel_memory/story/roles/周师兄.md.tmp.3984.1778297994711",
+    "玄幻/test1/novel_memory/story/roles/石磊.md",
+    "玄幻/test1/output/chapters/chapter_001/chapter_001_v1.md",
+    "玄幻/test1/output/chapters/chapter_001/chapter_001_context.md",
+    "AI小说工作流的实现/genre_refactor/genre_profiles/xuanhuan_feicai.md",
+    "玄幻/test1/output/chapters/chapter_001/polish_notes_v3.md",
+    "玄幻/test1/output/chapters/chapter_001/revision_notes_v2.md",
+    "玄幻/test1/output/chapters/chapter_001/chapter_001_audit_round1.json",
+    "玄幻/test1/output/chapters/chapter_001/chapter_001_memo.md",
+    "玄幻/test1/novel_memory/story/outline/volume_3_outline.md",
+    "玄幻/test1/novel_memory/story/outline/volume_2_outline.md",
+    "玄幻/test1/novel_memory/state/workflow_state.md",
+    "玄幻/test1/novel_memory/state/relationship_tracker.md"
+  ]
+}

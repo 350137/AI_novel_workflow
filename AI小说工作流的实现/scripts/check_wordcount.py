@@ -29,14 +29,17 @@ def load_wordcount_from_genre_profile():
 
 
 def count_chinese_chars(text):
-    """统计中文字符数（不含标点、空格、注释）"""
+    """统计中文字符数（不含标点、空格、注释、作者说、追踪卡）"""
     # 移除 Markdown 标题、注释、代码块
     text = re.sub(r'^#.*$', '', text, flags=re.MULTILINE)
     text = re.sub(r'<!--.*?-->', '', text, flags=re.DOTALL)
     text = re.sub(r'```.*?```', '', text, flags=re.DOTALL)
-    text = re.sub(r'>\s*\*{0,2}.*?\*{0,2}\s*$', '', text, flags=re.MULTILINE)
     text = re.sub(r'\[.*?\]\(.*?\)', '', text)
     text = re.sub(r'[-*_~`]', '', text)
+
+    # 移除分隔线 `---` 之后的所有非正文内容
+    # 包括：章末钩子、作者说、隐藏情节追踪卡、writerNotes
+    text = re.sub(r'\n---\n.*', '', text, flags=re.DOTALL)
 
     # 统计中文字符 + 中文标点
     chinese_chars = len(re.findall(r'[一-鿿　-〿＀-￯]', text))

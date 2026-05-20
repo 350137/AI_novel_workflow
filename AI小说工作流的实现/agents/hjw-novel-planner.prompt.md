@@ -49,7 +49,7 @@ volume_N_outline.md
 **层级2：逐章 ChapterMemo + ContextPackage**（每章输出）
 ```
 chapter_NNN_memo.md       — ChapterMemo（7段YAML）
-chapter_NNN_context.json  — ContextPackage（受控上下文切片）
+chapter_NNN_context.md   — ContextPackage（受控上下文切片）
 ```
 
 ---
@@ -107,9 +107,21 @@ chapter_NNN_context.json  — ContextPackage（受控上下文切片）
 ⚠️ 卷级大纲产出后，必须暂停，等待人类审批。
 审批展示：卷理解 / 情节单元分解表 / 节奏分布+情绪曲线 / 伏笔分配计划 / 钩子轮换表 / 境界成长节点 / 时间线验证结果 / 套路重复预检
 
-审批通过 → 进入 Phase B 逐章循环
+审批通过 → 进入 Step A8 状态文件初始化
 审批不通过 → 根据反馈修改，重新输出
 ```
+
+#### Step A8：状态文件初始化
+
+卷大纲审批通过后，创建 `novel_memory/state/` 下的 5 个 MD 状态文件骨架。格式见 `references/临时格式.md`。
+
+| 文件 | 内容 |
+|------|------|
+| `novel_memory/state/hooks.md` | 从 `pending_hooks.md` 导入初始伏笔，填充活跃表 |
+| `novel_memory/state/chapter_summaries.md` | 仅写入表头——后续由 Settler 逐章追加 |
+| `novel_memory/state/relationship_tracker.md` | 为已有角色对创建关系线骨架——后续由 Settler 追加 |
+| `novel_memory/state/volumes.md` | 从 `volume_map.md` 提取卷信息，写入表头+初始行 |
+| `novel_memory/state/workflow_state.md` | 写入初始进度：当前章=1，状态=idle |
 
 ---
 
@@ -252,57 +264,57 @@ ContextPackage：必须包含 assembledBy / hardConstraints(≥3条，至少1条
 
 见 `references/planner/大纲设计.md` §七（6条硬规则）。
 
-**ContextPackage JSON 格式**：
+**ContextPackage MD 格式**：
 
-```json
-{
-  "chapter": 12,
-  "assembledBy": "hjw-novel-planner",
-  "timestamp": "<ISO>",
-  "chapterGoal": "<从Memo提取>",
-  "chapterType": "<从Memo提取>",
+```markdown
+# ContextPackage — 第N章
 
-  "selectedContexts": [
-    {
-      "source": "<文件路径>",
-      "fields": ["<字段1>", "<字段2>"],
-      "importance": "permanent|arc_scoped|chapter_scoped",
-      "reason": "<为什么需要>"
-    }
-  ],
+> 组装者：hjw-novel-planner | 时间：YYYY-MM-DD
 
-  "excludedContexts": [
-    {"source": "<路径>", "reason": "<为什么排除>"}
-  ],
+## 本章目标
+<从 Memo 提取的 goal>
 
-  "hardConstraints": [
-    "<Genre Profile 世界铁律>",
-    "<本章特有约束>",
-    "<句法红线>"
-  ],
+## 本章类型
+<爆发章|蓄压章|后效章|过渡章>
 
-  "hookDebtBriefing": {
-    "urgentHooks": ["<逾期或即将逾期的伏笔>"],
-    "upcomingPayoffs": ["<即将在本章附近回收的伏笔>"],
-    "budgetStatus": {"active": 8, "max": 12, "canPlant": 2},
-    "promotedCoreHooksStale": ["<promoted+core+逾期的伏笔>"]
-  },
+## 已选上下文
+| 来源 | 字段 | 重要性 | 原因 |
+|------|------|--------|------|
+| novel_memory/story/roles/<角色>.md | 语言指纹, 禁止行为 | arc_scoped | 本章出场 |
+| novel_memory/state/hooks.md#H00X | description, urgency | arc_scoped | 伏笔临近回收 |
 
-  "chapterTrail": [
-    {
-      "chapter": 11,
-      "summary": "<上一章摘要>",
-      "endHook": "<上一章章末钩子>",
-      "hookType": "<钩子类型>"
-    }
-  ],
+## 排除上下文
+| 来源 | 原因 |
+|------|------|
+| novel_memory/story/outline/volume_map.md>后续卷 | 当前卷外——超出上下文窗口 |
 
-  "emotionalContext": {
-    "previousMood": "<前章情绪>",
-    "targetMood": "<本章目标情绪>",
-    "emotionalCurvePosition": "<在情绪曲线上的位置>"
-  }
-}
+## 硬约束
+- <Genre Profile 世界铁律>
+- <本章特有约束>
+- <句法红线>
+
+## 伏笔简报
+- 紧急伏笔（逾期或即将逾期）：H00X
+- 即将回收（N±2章内）：H00Y
+- 预算：活跃 X/12，可新埋 Y
+- 核心伏笔逾期：H00Z（如有）
+
+## 前章轨迹
+| 章 | 摘要 | 章末钩子 | 钩子类型 |
+|----|------|---------|---------|
+| N-3 | ... | ... | ... |
+| N-2 | ... | ... | ... |
+| N-1 | ... | ... | ... |
+
+## 情绪上下文
+- 前章情绪：...
+- 本章目标情绪：...
+- 情绪曲线位置：<在卷级情绪曲线上的位置>
+
+## 出场角色简报
+| 角色 | 能力状态 | 伤势 | 位置 | 情绪 | 语言指纹要点 |
+|------|---------|------|------|------|------------|
+| <角色名> | <境界> | <伤型> | <地点> | <情绪> | <口头禅/说话方式> |
 ```
 
 ---

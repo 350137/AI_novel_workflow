@@ -27,9 +27,9 @@
 
 | 输入 | 内容 | 使用 |
 |------|------|------|
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_revised.md` | 修订后章节正文（已通过审计） | **润色对象** |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_audit.json` | 最终 AuditReport | 了解被标记过的问题区域——润色时更谨慎 |
-| `novel_memory/output/chapters/chapter_NNN/revision_notes.md` | Reviser 的修订说明 | 了解哪些段落被修改过——保留修改意图 |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v{N}.md` | 审计通过的章节正文——取目录下最大版本号 | **润色对象** |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_audit_round{N}.json` | 最终 AuditReport | 了解被标记过的问题区域——润色时更谨慎 |
+| `novel_memory/output/chapters/chapter_NNN/revision_notes_v{N}.md` | Reviser 的修订说明——取目录下最大版本号 | 了解哪些段落被修改过——保留修改意图（如不存在则跳过） |
 | `novel_memory/story/style/genre_profile.md` | 题材配置 | 违禁词表/疲劳词表/句法红线/叙述风格 |
 | `novel_memory/story/writing_tips.md` | 本书特有创作建议 | 类型技法指引——搞笑渗透方式/角色区分度/节奏风险 |
 | `novel_memory/story/roles/<出场角色>.md` | 角色档案 | 确认境界/功法/武器名不被润色改变 |
@@ -38,8 +38,8 @@
 
 | 输出 | 格式 | 内容 |
 |------|------|------|
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v2.md` | Markdown | 润色后正文（作者说+追踪卡原样保留） |
-| `novel_memory/output/chapters/chapter_NNN/polish_notes.md` | Markdown | 润色说明（改了什么/统计/[polisher-note]） |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v{N+1}.md` | Markdown | 润色后正文——版本号递增（作者说+追踪卡原样保留） |
+| `novel_memory/output/chapters/chapter_NNN/polish_notes_v{N}.md` | Markdown | 润色说明（改了什么/统计/[polisher-note]） |
 
 ---
 
@@ -95,7 +95,7 @@ Priority 5：标点与格式统一
 
 ### Step 4：输出润色版 + 润色说明
 
-输出 `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v2.md` 和 `novel_memory/output/chapters/chapter_NNN/polish_notes.md`。格式详见 `references/polisher/润色规则.md` §四。
+输出 `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v{N}.md` 和 `novel_memory/output/chapters/chapter_NNN/polish_notes_v{N}.md`。格式详见 `references/polisher/润色规则.md` §四。
 
 ---
 
@@ -133,16 +133,16 @@ Priority 5：标点与格式统一
 
 | 上游产出 | 你的使用 |
 |---------|---------|
-| chapter_NNN_revised.md | 润色对象 |
-| chapter_NNN_audit.json | 了解被标记区域——润色更谨慎 |
-| revision_notes.md | 了解修改过的段落——保留修改意图 |
+| chapter_NNN_v{N}.md | 润色对象（审计通过的最新版本） |
+| chapter_NNN_audit_round{N}.json | 了解被标记区域——润色更谨慎 |
+| revision_notes_v{N}.md | 了解修改过的段落——保留修改意图（如存在） |
 
 ### 向 Settler 传递
 
 | 你的产出 | Settler 的使用 |
 |---------|-------------|
-| chapter_NNN_v2.md | 最终正文——落定状态 |
-| polish_notes.md | 归档润色记录 |
+| chapter_NNN_v{N}.md | 最终正文——落定状态 |
+| polish_notes_v{N}.md | 归档润色记录 |
 
 ### 向 Auditor/Planner 反馈（通过 polish_notes）
 

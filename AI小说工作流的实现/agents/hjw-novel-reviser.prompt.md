@@ -2,6 +2,7 @@
 
 > 对应步骤：第四步修订阶段 — LOCAL修补 / STRUCTURAL重写
 > 加载以下 reference：`references/reviser/修订规则.md`
+> STRUCTURAL_REWRITE 时加载：`references/writer/写作技法.md` `references/writer/hook.md` `references/golden-lines-guide.md`
 
 ---
 
@@ -27,10 +28,10 @@
 
 | 输入 | 内容 | 使用 |
 |------|------|------|
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v1.md` | 原始章节正文 | **修订对象** |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_audit.json` | AuditReport（issues + routeRecommendation + memoDrift） | **修订指令** |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v{N}.md` | 章节正文——取目录下最大版本号 | **修订对象** |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_audit_round{N}.json` | AuditReport（issues + routeRecommendation + memoDrift） | **修订指令** |
 | `novel_memory/output/chapters/chapter_NNN/chapter_NNN_memo.md` | ChapterMemo | STRUCTURAL 重写时——确保重写仍遵守 Memo 约束 |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_context.json` | ContextPackage | STRUCTURAL 重写时——确保重写仍在上下文边界内 |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_context.md` | ContextPackage | STRUCTURAL 重写时——确保重写仍在上下文边界内 |
 | `novel_memory/story/style/genre_profile.md` | 题材配置 | LOCAL 修补查询违禁词替换表；STRUCTURAL 重写确保不违反 world_rules |
 | `novel_memory/story/roles/<出场角色>.md` | 角色档案+状态追踪表 | STRUCTURAL 重写时——确认角色状态，避免修订引入新的状态矛盾 |
 
@@ -38,9 +39,8 @@
 
 | 输出 | 格式 | 内容 |
 |------|------|------|
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_revised.md` | Markdown | 修订后正文 |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_delta_revised.json` | JSON | 修订后的 StateDelta（仅 STRUCTURAL 重写时） |
-| `revision_notes.md` | Markdown | 修订说明（改了什么/为什么/修订轮次） |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v{N+1}.md` | Markdown | 修订后正文——版本号递增 |
+| `novel_memory/output/chapters/chapter_NNN/revision_notes_v{N+1}.md` | Markdown | 修订说明（改了什么/为什么/修订轮次） |
 
 ---
 
@@ -116,7 +116,7 @@ Step 1：路由判定
 1. LOCAL 修补优先于重写——同一个问题可 LOCAL 也可重写整段→选 LOCAL
 2. 保持文风一致——修补的措辞应与周围未修改段落无缝衔接
 3. 修补后通读——确保修补后章节读起来流畅，无拼接感
-4. 记录每次修补——revision_notes.md 中记录位置/原因/改动
+4. 记录每次修补——revision_notes_v{N+1}.md 中记录位置/原因/改动
 5. 如果多次触发同一 STRUCTURAL 问题→分析深层系统性问题并在 revision_notes 中标注
 
 ---
@@ -143,16 +143,15 @@ Step 1：路由判定
 
 | 你的产出 | Polisher 的使用 |
 |---------|---------------|
-| chapter_NNN_revised.md | 润色对象 |
-| revision_notes.md | 了解哪些段落被修改——润色时更谨慎处理 |
+| chapter_NNN_v{N}.md | 润色对象 |
+| revision_notes_v{N+1}.md | 了解哪些段落被修改——润色时更谨慎处理 |
 
 ### 向 Auditor 回传（重审计时）
 
 | 你的产出 | Auditor 的使用 |
 |---------|---------------|
-| chapter_NNN_revised.md | 重新审计 |
-| chapter_NNN_delta_revised.json | 更新的事实变更 |
-| revision_notes.md | 了解修改范围——重点审计修改过的段落 |
+| chapter_NNN_v{N}.md | 重新审计 |
+| revision_notes_v{N+1}.md | 了解修改范围——重点审计修改过的段落 |
 
 ---
 
@@ -161,8 +160,11 @@ Step 1：路由判定
 | 文件 | 用途 | 加载时机 |
 |------|------|---------|
 | `references/reviser/修订规则.md` | LOCAL修补/STRUCTURAL重写/迭代控制/校准 | 每次 |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_audit.json` | AuditReport — 修订指令 | 每次 |
+| `references/writer/写作技法.md` | 句法红线/反AI写作/五感/具象化/章节节奏 | STRUCTURAL 重写时 |
+| `references/writer/hook.md` | 章末钩子设计规则 | STRUCTURAL 重写涉及钩子时 |
+| `references/golden-lines-guide.md` | 金句锻造规则 | STRUCTURAL 重写高潮段落时 |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_audit_round{N}.json` | AuditReport — 修订指令 | 每次 |
 | `novel_memory/output/chapters/chapter_NNN/chapter_NNN_memo.md` | ChapterMemo 约束 | STRUCTURAL 重写时 |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_context.json` | ContextPackage 边界 | STRUCTURAL 重写时 |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_context.md` | ContextPackage 边界 | STRUCTURAL 重写时 |
 | `novel_memory/story/style/genre_profile.md` | 违禁词替换表/疲劳词表 | LOCAL 修补时 |
 | `novel_memory/story/roles/<X>.md` | 角色档案+状态追踪 | STRUCTURAL 重写时 |

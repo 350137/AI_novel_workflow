@@ -32,15 +32,17 @@
 
 | 输入 | 内容 | 使用 |
 |------|------|------|
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v1.md` | 章节正文（含作者说+追踪卡） | **审计对象** |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v{N}.md` | 章节正文——取目录下最大版本号（含作者说+追踪卡） | **审计对象** |
+| `novel_memory/output/chapters/chapter_NNN-1/chapter_NNN-1_v{N}.md` | 前章正文——取目录下最大版本号（含 writerNotes） | 跨章一致性——前章实际摘要 + 钩子承接 |
 | `novel_memory/output/chapters/chapter_NNN/chapter_NNN_memo.md` | ChapterMemo | 备忘偏离基准 |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_context.json` | ContextPackage | 信息越界边界 |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_context.md` | ContextPackage | 信息越界边界 |
 | `novel_memory/state/hooks.md` | 伏笔台账表 | 伏笔逾期检测 |
-| `novel_memory/state/chapter_summaries.md` | 前章摘要表 | 跨章一致性参考 |
 | `novel_memory/story/roles/<本章出场角色>.md` | 角色档案+状态追踪表 | OOC基准 + 状态矛盾检测（读状态表最后一行） |
 | `novel_memory/story/style/genre_profile.md` | 类型配置 | 审计维度开关/疲劳词表 |
 
 ### 输出
+
+写入 `novel_memory/output/chapters/chapter_NNN/chapter_NNN_audit_round{N}.json`，其中 N=目录下已有 audit_round 文件数+1。
 
 ```json
 {
@@ -117,7 +119,9 @@ AuditReport 保持 JSON 格式。Reviser 依赖 issue.category 字段做 LOCAL/S
 
 维度 1-13。参见 reference §二。
 
-逐项通读正文统计：字数/疲劳词/违禁词/套话密度/对话标签/句首重复/感官分布/段落方差/章末钩子/AI标记词/对话占比/段落漂移/跨章重复。填入 `layer1Results`。
+**维度 1（字数统计）**：调用脚本 `python scripts/check_wordcount.py <章节文件路径>`。脚本自动排除作者说/追踪卡/writerNotes 段落，仅统计正文中文字符。结果与 Genre Profile `chapter.word_count` 对比——不在范围内 → WARNING。
+
+**维度 2-13**：逐项通读正文统计：疲劳词/违禁词/套话密度/对话标签/句首重复/感官分布/段落方差/章末钩子/AI标记词/对话占比/段落漂移/跨章重复。填入 `layer1Results`。
 
 确认每个命中项的严重级别是否准确——如"猩红"在血腥场景中出现4次可能是合理的，可判定不构成问题并备注。但不可修改客观数据。
 
@@ -179,7 +183,7 @@ AuditReport 保持 JSON 格式。Reviser 依赖 issue.category 字段做 LOCAL/S
 
 | Writer 产出 | 你的使用 |
 |------------|---------|
-| chapter_NNN_v1.md | 审计对象——所有维度围绕此展开 |
+| chapter_NNN_v{N}.md | 审计对象——所有维度围绕此展开 |
 
 ### 从 Planner 接收（间接）
 
@@ -204,10 +208,10 @@ AuditReport 保持 JSON 格式。Reviser 依赖 issue.category 字段做 LOCAL/S
 | 文件 | 用途 | 加载时机 |
 |------|------|---------|
 | `references/auditor/维度表.md` | 42维定义/评分锚点/章节矩阵/豁免规则/备忘偏离/路由/校准 | 每次 |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v1.md` | 审计对象 | 每次 |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_v{N}.md` | 审计对象 | 每次 |
 | `novel_memory/output/chapters/chapter_NNN/chapter_NNN_memo.md` | 备忘偏离基准 | 每次 |
-| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_context.json` | 信息越界边界 | 每次 |
+| `novel_memory/output/chapters/chapter_NNN/chapter_NNN_context.md` | 信息越界边界 | 每次 |
 | `novel_memory/state/hooks.md` | 伏笔台账 | 每次 |
-| `novel_memory/state/chapter_summaries.md` | 跨章一致性参考 | 按需 |
+| `novel_memory/output/chapters/chapter_NNN-1/chapter_NNN-1_v{N}.md` | 跨章一致性——前章实际摘要+钩子承接 | 每次（第1章免） |
 | `novel_memory/story/roles/<X>.md` | OOC基准 + 状态矛盾检测 | 每次 |
 | `novel_memory/story/style/genre_profile.md` | 审计维度开关/疲劳词表 | 每次 |
