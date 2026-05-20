@@ -1,0 +1,32 @@
+# === 本地配置 ===
+.claude/settings.local.json
+
+# === 操作系统 ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+
+# === Obsidian 个人工作区 ===
+.obsidian/
+
+# === 个人小说实验数据 ===
+novel_memory/story/outline/
+novel_memory/story/roles/*
+!novel_memory/story/roles/_TEMPLATE.md
+novel_memory/story/style/
+novel_memory/story/pending_hooks.md
+novel_memory/story/writing_tips.md
+novel_memory/story/character_map.md
+novel_memory/state/
+
+# === 过程记录 ===
+重构记录.md
+
+# === IDE ===
+.vscode/
+.idea/
