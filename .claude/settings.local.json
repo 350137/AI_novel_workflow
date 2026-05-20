@@ -1,40 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:clawhub.ai)",
-      "WebFetch(domain:skillhub.cloud.tencent.com)",
-      "WebSearch",
-      "WebFetch(domain:github.com)",
-      "WebFetch(domain:skillhub.tencent.com)",
-      "WebFetch(domain:skillhub.cn)",
-      "Bash(npx clawhub *)",
-      "Bash(npm list *)",
-      "Bash(clawhub search *)",
-      "Bash(clawhub inspect *)",
-      "Bash(clawhub *)",
-      "Bash(npx skillhub *)",
-      "Bash(pip list *)",
-      "Bash(skillhub *)",
-      "Bash(curl -fsSL https://skillhub.cn/install/install.sh)",
-      "Bash(bash)",
-      "Bash(bash -s -- --no-skills)",
-      "Bash(curl -s \"https://skillhub.cloud.tencent.com/api/skills/g113593\")",
-      "Bash(curl -s \"https://skillhub.cn/api/skills/g113593\")",
-      "Bash(unzip -l \"D:/下载/g113593-1.0.5.zip\")",
-      "Bash(unzip -p \"D:/下载/g113593-1.0.5.zip\" SKILL.md)",
-      "Bash(mkdir -p __TRACKED_VAR__/.claude/skills/tomato-novelist)",
-      "Bash(unzip -o D:/下载/g113593-1.0.5.zip -d __TRACKED_VAR__/.claude/skills/tomato-novelist/)",
-      "Bash(xargs grep *)",
-      "Read(//c/Users/35013/.claude/skills/**)",
-      "Bash(python3 _temp_patch.py)",
-      "Bash(rm _temp_patch.py)",
-      "Bash(python3 -c \"print\\('test'\\)\")",
-      "Bash(python *)",
-      "Bash(curl -s \"https://api.github.com/repos/Narcooo/inkos/contents/dist/genres\")",
-      "Bash(curl -sL \"https://raw.githubusercontent.com/Narcooo/inkos/main/dist/genres/\")",
-      "Bash(grep -c \"D:\\\\\\\\小说\\\\\\\\AI小说工作流的实现\" /d/小说/AI小说工作流的实现/.claude/skills/write-chapter/SKILL.md)",
-      "Bash([ -f \"/c/Users/35013/.claude/skills/$s/SKILL.md\" ])",
-      "WebFetch(domain:www.calendardate.com)"
+      "Bash(Get-ChildItem -Recurse -Depth 5 -Name \"d:\\\\小说\\\\AI小说工作流的实现\")",
+      "Bash(ls -la \"d:\\\\小说\\\\\")",
+      "Read(//d//**)",
+      "Bash(mv \"d:\\\\小说\\\\.git\" \"d:\\\\小说\\\\AI小说工作流的实现\\\\.git\")",
+      "Bash(git add *)"
+    ],
+    "additionalDirectories": [
+      "d:\\小说\\.git"
     ]
   }
 }

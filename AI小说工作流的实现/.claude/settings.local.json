@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(Get-ChildItem -Recurse -Depth 5 -Name \"d:\\\\小说\\\\AI小说工作流的实现\")"
-    ]
-  }
-}
